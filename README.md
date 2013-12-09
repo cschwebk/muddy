@@ -2,11 +2,8 @@
 
 A MUD client in your browser usin' node.js & websockets.
 
-This has only been tested with [Aardwolf](http://aardwolf.com),
-so if you notice anything wrong in a different MUD let me know via
-[Issues](http://github.com/dannytatom/muddy/issues).
-
-![Screnshot!](https://github.com/dannytatom/muddy/raw/master/screenshot.png)
+This fork of muddy has been especially enhanced for use with the MUD
+MUME - Multi-Users in Middle Earth
 
 ## Features
 
@@ -18,7 +15,7 @@ so if you notice anything wrong in a different MUD let me know via
 
 ### Installation
 
-    $ git clone git://github.com/dannytatom/muddy.git
+    $ git clone git://github.com/cschwebk/muddy.git
     $ cd muddy
     $ npm install
     $ vim config/config.json
@@ -38,5 +35,6 @@ so if you notice anything wrong in a different MUD let me know via
     ;trigger ls                        # List triggers
 
 ## Copyright
+
 
 Copyright (c) 2011 Danny Tatom. See LICENSE for details.
