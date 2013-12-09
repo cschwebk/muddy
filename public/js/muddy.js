@@ -1,51 +1,91 @@
-$(function() {
-  var world   = new World('#world')
-    , socket  = io.connect(window.location.hostname)
+$(function () {
+    "use strict";
 
-  var resizeUI = function() {
-    $('#input input').width(window.innerWidth - 30)
-    $('.output').height(window.innerHeight - 115)
-    $('.output').attr({ scrollTop: $('.output').attr('scrollHeight') })
-  }
+    var world = new World('#world'),
+        socket = io.connect(window.location.hostname);
 
-  resizeUI()
-
-  socket.on('connect', function() {
-    $('input').focus()
-
-    $('input').keyup(function(event) {
-      if (event.keyCode == 13) {
-        socket.emit('message', $('input').val())
-        world.selfMesssage($('input').val())
-        world.updateHistory($('input').val())
-
-        $('input').val('')
-      } else if (event.keyCode == 38) {
-        if (world.history[world.current - 1]) {
-          $('input').val(world.history[world.current -= 1])
-        }
-      } else if (event.keyCode == 40) {
-        if (world.history[world.current]) {
-          $('input').val(world.history[world.current += 1])
-        }
-      }
-    })
-
-    window.onresize = function(event) {
-      resizeUI()
+    function resizeUI() {
+        $('#input input').width(window.innerWidth - 30);
+        $('.output').height(window.innerHeight - 115);
+        $('.output').attr({
+            scrollTop: $('.output').attr('scrollHeight')
+        });
     }
-  })
 
-  socket.on('message', function(message) {
-    var command = message.command
-      , data    = message.data
+    resizeUI();
 
-    if (command == 'updateWorld') {
-      world.update(data)
-    } else if (command == 'listAliases') {
-      world.listAliases(data)
-    } else if (command == 'listTriggers') {
-      world.listTriggers(data)
-    }
-  })
-})
+    socket.on('connect', function () {
+        var connectButton = $('#connectButton');
+
+        $('input').focus();
+
+        $('input').keyup(function (event) {
+            var message,
+                KEYCODE_ENTER = 13,
+                KEYCODE_ESC = 27,
+                KEYCODE_UP = 38,
+                KEYCODE_DOWN = 40,
+                key = event.keyCode;
+
+            switch (key) {
+                case KEYCODE_ENTER:
+                    message = $('input').val();
+                    socket.emit('message', message);
+                    world.selfMesssage(message);
+                    world.updateHistory(message);
+                    $('input').val('');
+                break;
+                case KEYCODE_UP:
+                    if (world.history[world.current - 1]) {
+                        $('input').val(world.history[world.current -= 1]);
+                    }
+                break;
+                case KEYCODE_DOWN:
+                    if (world.history[world.current]) {
+                        $('input').val(world.history[world.current += 1]);
+                    }
+                break;
+                case KEYCODE_ESC:
+                    $('input').val('');
+                break;
+            }
+        });
+
+        connectButton.click(function (event) {
+            console.log(event);
+            if (connectButton.val() === 'connect') {
+                socket.emit('message', ';connect');
+                connectButton.val('zap');
+                connectButton.html('Disconnect');
+            } else {
+                socket.emit('message', ';zap');
+                connectButton.val('connect');
+                connectButton.html('Connect');
+            }
+        });
+
+        window.onresize = function(event) {
+            resizeUI();
+        };
+    });
+
+    socket.on('message', function(message) {
+        var command = message.command,
+            data = message.data;
+
+        switch (command) {
+            case 'systemMessage':
+                world.systemMessage(data);
+            break;
+            case 'updateWorld':
+                world.update(data);
+            break;
+            case 'listAliases':
+                world.listAliases(data);
+            break;
+            case 'listTriggers':
+                world.listTriggers(data);
+            break;
+        }
+    });
+});
