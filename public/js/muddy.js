@@ -64,6 +64,10 @@ $(function () {
             }
         });
 
+        $('.output').click(function (event) {
+            $('input').focus();
+        });
+
         window.onresize = function(event) {
             resizeUI();
         };
