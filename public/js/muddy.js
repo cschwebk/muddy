@@ -6,9 +6,12 @@ $(function () {
 
     function resizeUI() {
         $('#input input').width(window.innerWidth - 30);
-        $('.output').height(window.innerHeight - 115);
-        $('.output').attr({
-            scrollTop: $('.output').attr('scrollHeight')
+        $('.world-container').height(window.innerHeight - 180);
+        $('.world-output').attr({
+            scrollTop: $('.world-output').attr('scrollHeight')
+        });
+        $('.comm-output').attr({
+            scrollTop: $('.comm-output').attr('scrollHeight')
         });
     }
 

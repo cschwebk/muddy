@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang='en'>
     <head>
         <title><%= mud %></title>
 
@@ -7,6 +7,7 @@
 
         <link rel='icon' type='image/png' href='/img/icon.png' />
 
+        <link rel='stylesheet' type='text/css' media='all' href='http://yui.yahooapis.com/3.5.0/build/cssreset/cssreset-min.css' />
         <link rel='stylesheet' type='text/css' media='all' href='/css/layout.css' />
         <link rel='stylesheet' type='text/css' media='all' href='/css/colors.css' />
 
@@ -25,7 +26,15 @@
         </div>
 
         <div id='client'>
-            <div id='world' class='output'></div>
+            <div class="player-container">
+                <div id='player' class='player-output'></div>
+            </div>
+            <div class="comm-container">
+                <div id='comm' class='comm-output'></div>
+            </div>
+            <div class="world-container">
+                <div id='world' class='world-output'></div>
+            </div>
         </div>
 
         <div id='input'>

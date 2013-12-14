@@ -1,3 +1,8 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -6,6 +11,8 @@ body {
   color: #909090;
   background: #272727;
   background-image: url('/img/background.png');
+  height: 100%;
+  width: 100%;
 }
 
 @font-face {
@@ -58,16 +65,93 @@ ul {
   width: 100%;
 }
 
-  #client .output {
+  #client .world-container {
+    width: 50%;
+    height: 200px;
+    position: relative;
+    cursor: move;
+    background-color: rgb(101, 176, 255);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-top: 10px;
+    float: left;
+    clear: left;
+  }
+
+  #client .world-output {
     overflow-x: hidden;
     overflow-y: scroll;
-    padding: 10px;
-    height: 200px;
+    height: 100%;
+    width: 100%;
     font-family: DroidSansMono;
     font-size: 10px;
     line-height: 14px;
     white-space: pre-wrap;
     color: #dddddd;
+    position: absolute;
+    background-color: rgb(45,45,45);
+    cursor: default;
+    box-sizing: border-box;
+    padding: 0 5px;
+  }
+
+  #client .player-container {
+    width: 50%;
+    height: 75px;
+    position: relative;
+    cursor: move;
+    background-color: rgb(255, 176, 101);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-top: 10px;
+    float: left;
+    border-right: #dddddd;
+  }
+
+  #client .player-output {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 100%;
+    width: 100%;
+    font-family: DroidSansMono;
+    font-size: 10px;
+    line-height: 14px;
+    white-space: pre-wrap;
+    color: #dddddd;
+    position: absolute;
+    background-color: rgb(45,45,45);
+    cursor: default;
+    box-sizing: border-box;
+    padding: 0 5px;
+  }
+
+  #client .comm-container {
+    width: 50%;
+    height: 200px;
+    position: relative;
+    cursor: move;
+    background-color: rgb(101, 255, 176);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-top: 10px;
+    float: right;
+  }
+
+  #client .comm-output {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
+    font-family: DroidSansMono;
+    font-size: 10px;
+    line-height: 14px;
+    white-space: pre-wrap;
+    color: #dddddd;
+    position: absolute;
+    background-color: rgb(45,45,45);
+    cursor: default;
+    box-sizing: border-box;
+    padding: 0 5px;
   }
 
 #input {
