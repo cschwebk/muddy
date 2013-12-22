@@ -80,6 +80,8 @@ $(function () {
         var command = message.command,
             data = message.data;
 
+        console.log('aliases: ' + data);
+
         switch (command) {
             case 'systemMessage':
                 world.systemMessage(data);

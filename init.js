@@ -46,13 +46,13 @@ io.sockets.on('connection', function(socket) {
             if (data.match(/^;alias add/i)) {
                 alias.create(data);
             } else if (data.match(/^;alias ls/i)) {
-                socket.send(createResponse('listAliases', alias.list()));
+                socket.emit('message', createResponse('listAliases', alias.list()));
             } else if (data.match(/^;alias rm/i)) {
                 alias.remove(data);
             } else if (data.match(/^;trigger add/i)) {
                 trigger.create(data);
             } else if (data.match(/^;trigger ls/i)) {
-                socket.send(createResponse('listTriggers', trigger.list()));
+                socket.emit(createResponse('listTriggers', trigger.list()));
             } else if (data.match(/^;trigger rm/i)) {
                 trigger.remove(data);
             } else if (data.match(/^;zap/i)) {
