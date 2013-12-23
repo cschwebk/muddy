@@ -116,13 +116,16 @@ ul {
     font-family: DroidSansMono;
     font-size: 10px;
     line-height: 14px;
-    white-space: pre-wrap;
     color: #dddddd;
     position: absolute;
     background-color: rgb(45,45,45);
     cursor: default;
     box-sizing: border-box;
     padding: 0 5px;
+  }
+
+  #client .player-output li {
+    margin-bottom: 5px;
   }
 
   #client .comm-container {

@@ -34,7 +34,7 @@ $(function () {
                 case KEYCODE_ENTER:
                     message = $('input').val();
                     socket.emit('message', message);
-                    world.selfMesssage(message);
+                    world.selfMessage(message);
                     world.updateHistory(message);
                     $('input').val('');
                 break;
@@ -55,7 +55,6 @@ $(function () {
         });
 
         connectButton.click(function (event) {
-            console.log(event);
             if (connectButton.val() === 'connect') {
                 socket.emit('message', ';connect');
                 connectButton.val('zap');
@@ -80,8 +79,6 @@ $(function () {
         var command = message.command,
             data = message.data;
 
-        console.log('aliases: ' + data);
-
         switch (command) {
             case 'systemMessage':
                 world.systemMessage(data);
@@ -89,11 +86,17 @@ $(function () {
             case 'updateWorld':
                 world.update(data);
             break;
+            case 'echoAlias':
+                world.selfMessage(data);
+            break;
             case 'listAliases':
                 world.listAliases(data);
             break;
             case 'listTriggers':
                 world.listTriggers(data);
+            break;
+            case 'updatePlayer':
+                world.updatePlayer(data);
             break;
         }
     });

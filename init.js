@@ -5,6 +5,7 @@ var fs = require('fs'),
     http = require('http'),
     express = require('express'),
     alias = require('./lib/alias'),
+    player = require('./lib/player'),
     trigger = require('./lib/trigger'),
     formatter = require('./lib/formatter'),
     config = JSON.parse(fs.readFileSync('config/config.json', 'utf8')),
@@ -40,10 +41,23 @@ app.get('/', function(req, res) {
 
 io.sockets.on('connection', function(socket) {
     socket.on('message', function(data) {
-        var delimiter = ';';
+        var delimiter = ';',
+            replaced;
 
         if (data[0] === delimiter) {
-            if (data.match(/^;alias add/i)) {
+            if (data.match(/^;tar/i)) {
+                player.setTarget(data);
+                socket.emit('message', createResponse('updatePlayer', {
+                    key: 'target',
+                    player: player.getPlayer()
+                }));
+            } else if (data.match(/^;lead/i)) {
+                player.setLeader(data);
+                socket.emit('message', createResponse('updatePlayer', {
+                    key: 'leader',
+                    player: player.getPlayer()
+                }));
+            } else if (data.match(/^;alias add/i)) {
                 alias.create(data);
             } else if (data.match(/^;alias ls/i)) {
                 socket.emit('message', createResponse('listAliases', alias.list()));
@@ -64,7 +78,12 @@ io.sockets.on('connection', function(socket) {
             }
         } else {
             if (mud) {
-                mud.write(alias.format(data));
+                replaced = alias.format(data);
+                if (replaced !== data) {
+                    socket.emit('message', createResponse('echoAlias', replaced));
+                }
+
+                mud.write(replaced + '\r\n');
             }
         }
     });
