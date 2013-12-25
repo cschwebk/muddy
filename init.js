@@ -42,17 +42,18 @@ app.get('/', function(req, res) {
 io.sockets.on('connection', function(socket) {
     socket.on('message', function(data) {
         var delimiter = ';',
-            replaced;
+            replaced,
+            values;
 
         if (data[0] === delimiter) {
             if (data.match(/^;tar/i)) {
-                player.setTarget(data);
+                player.set('target', data.replace(';tar ', ''));
                 socket.emit('message', createResponse('updatePlayer', {
                     key: 'target',
                     player: player.getPlayer()
                 }));
             } else if (data.match(/^;lead/i)) {
-                player.setLeader(data);
+                player.set('leader', data.replace(';lead ', ''));
                 socket.emit('message', createResponse('updatePlayer', {
                     key: 'leader',
                     player: player.getPlayer()
@@ -66,7 +67,7 @@ io.sockets.on('connection', function(socket) {
             } else if (data.match(/^;trigger add/i)) {
                 trigger.create(data);
             } else if (data.match(/^;trigger ls/i)) {
-                socket.emit(createResponse('listTriggers', trigger.list()));
+                socket.emit('message', createResponse('listTriggers', trigger.list()));
             } else if (data.match(/^;trigger rm/i)) {
                 trigger.remove(data);
             } else if (data.match(/^;zap/i)) {
@@ -75,6 +76,8 @@ io.sockets.on('connection', function(socket) {
                 }
             } else if (data.match(/^;connect/i)) {
                 mud = connectToMud(socket);
+            } else if (data.match(/^;name/i)) {
+                player.set('name', data.replace(';name ', ''));
             }
         } else {
             if (mud) {
@@ -99,13 +102,29 @@ function connectToMud(socket) {
 
     mud.addListener('data', function(data) {
         var commands  = trigger.scan(data),
-            formatted = formatter.go(data);
+            formatted = formatter.go(data),
+            values;
 
-        socket.emit('message', createResponse('updateWorld', formatted));
+        if (data.indexOf('__status') > -1) {
+            //,status: ,10, ,Sadaauk, ,417249, ,87751, ,7366, ,0,
+            values = data.split('__');
+            player.set('level', values[2]);
+            player.set('name', values[4]);
+            player.set('xpTotal', values[6]);
+            player.set('xpNeeded', values[8]);
+            player.set('tpTotal', values[10]);
+            player.set('tpNeeded', values[12]);
+            socket.emit('message', createResponse('updatePlayer', {
+                key: 'all',
+                player: player.getPlayer()
+            }));
+        } else {
+            socket.emit('message', createResponse('updateWorld', formatted));
 
-        if (commands) {
-            for (index = 0, length = commands.length; index < length; index++) {
-                mud.write(commands[index]);
+            if (commands) {
+                for (index = 0, length = commands.length; index < length; index++) {
+                    mud.write(commands[index]);
+                }
             }
         }
     });

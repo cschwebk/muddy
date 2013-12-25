@@ -4,6 +4,12 @@ var World = function(selector) {
     this.current = 0;
     this.target = $('#player #target');
     this.leader = $('#player #leader');
+    this.name = $('#player #name');
+    this.level = $('#player #level');
+    this.xp = $('#session #xp');
+    this.tp = $('#session #tp');
+    this.xpSession = $('#session #xpSession');
+    this.tpSession = $('#session #tpSession');
 };
 
 World.prototype.update = function(data) {
@@ -57,6 +63,25 @@ World.prototype.listTriggers = function(triggers) {
 World.prototype.updatePlayer = function(data) {
     var key = data.key,
         player = data.player;
+
+    if (key === 'all') {
+        this.name.html('Name: ' + player.name);
+        this.level.html('Level: ' + player.level);
+        this.xp.html('XP Total (Needed): ' + player.xpTotal[player.xpTotal.length - 1] + ' (' + player.xpNeeded+ ')');
+        this.tp.html('TP Total (Needed): ' + player.tpTotal[player.tpTotal.length - 1] + ' (' + player.tpNeeded + ')');
+
+        if (player.xpTotal.length < 2) {
+            this.xpSession.html('XP This Session: 0');
+        } else {
+            this.xpSession.html('XP This Session: ' + (player.xpTotal[player.xpTotal.length - 1] - player.xpTotal[0]));
+        }
+
+        if (player.tpTotal.length < 2) {
+            this.tpSession.html('TP This Session: 0');
+        } else {
+            this.tpSession.html('TP This Session: ' + (player.tpTotal[player.tpTotal.length - 1] - player.tpTotal[0]));
+        }
+    }
 
     if (key === 'target') {
         this.systemMessage('Target set to: ' + player.target);

@@ -20,9 +20,9 @@ $(function () {
     socket.on('connect', function () {
         var connectButton = $('#connectButton');
 
-        $('input').focus();
+        $('#input input').focus();
 
-        $('input').keyup(function (event) {
+        $('#input input').keyup(function (event) {
             var message,
                 KEYCODE_ENTER = 13,
                 KEYCODE_ESC = 27,
@@ -59,6 +59,7 @@ $(function () {
                 socket.emit('message', ';connect');
                 connectButton.val('zap');
                 connectButton.html('Disconnect');
+                $('#input input').focus();
             } else {
                 socket.emit('message', ';zap');
                 connectButton.val('connect');
@@ -67,7 +68,7 @@ $(function () {
         });
 
         $('.output').click(function (event) {
-            $('input').focus();
+            $('#input input').focus();
         });
 
         window.onresize = function(event) {

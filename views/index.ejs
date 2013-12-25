@@ -1,47 +1,55 @@
 <!doctype html>
-<html lang='en'>
+<html lang="en">
     <head>
         <title><%= mud %></title>
 
-        <meta charset='utf-8' />
+        <meta charset="utf-8" />
 
-        <link rel='icon' type='image/png' href='/img/icon.png' />
+        <link rel="icon" type="image/png" href="/img/icon.png" />
 
-        <link rel='stylesheet' type='text/css' media='all' href='http://yui.yahooapis.com/3.5.0/build/cssreset/cssreset-min.css' />
-        <link rel='stylesheet' type='text/css' media='all' href='/css/layout.css' />
-        <link rel='stylesheet' type='text/css' media='all' href='/css/colors.css' />
+        <link rel="stylesheet" type="text/css" media="all" href="http://yui.yahooapis.com/3.5.0/build/cssreset/cssreset-min.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="/css/layout.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="/css/colors.css" />
 
-        <script type='text/javascript' src='/socket.io/socket.io.js'></script>
-        <script type='text/javascript' src='/js/ext/jquery-1.4.4.min.js'></script>
-        <script type='text/javascript' src='/js/lib/world.js'></script>
-        <script type='text/javascript' src='/js/muddy.js'></script>
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="/js/ext/jquery-1.4.4.min.js"></script>
+        <script type="text/javascript" src="/js/lib/world.js"></script>
+        <script type="text/javascript" src="/js/muddy.js"></script>
     </head>
 
     <body>
-        <div id='header'>
+        <div id="header">
             <h1>muddy</h1>
 
             <p>Playing <span><%= mud %></span></p>
-            <button id='connectButton' class='connectButton' value='connect'>Connect</button>
+            <button id="connectButton" class="connectButton" value="connect">Connect</button>
         </div>
 
-        <div id='client'>
+        <div id="client">
             <div class="player-container">
-                <ul id='player' class='player-output'>
-                    <li id='target'>Target:</li>
-                    <li id='leader'>Leader:</li>
+                <ul id="player" class="player-output">
+                    <li id="name">Name:</li>
+                    <li id="level">Level:</li>
+                    <li id="target">Target:</li>
+                    <li id="leader">Leader:</li>
+                </ul>
+                <ul id="session" class="session-output">
+                    <li id="xp">XP Total (Needed):</li>
+                    <li id="xpSession">XP This Session:</li>
+                    <li id="tp">TP Total (Needed):</li>
+                    <li id="tpSession">TP This Session:</li>
                 </ul>
             </div>
             <div class="comm-container">
-                <div id='comm' class='comm-output'></div>
+                <div id="comm" class="comm-output"></div>
             </div>
             <div class="world-container">
-                <div id='world' class='world-output'></div>
+                <div id="world" class="world-output"></div>
             </div>
         </div>
 
-        <div id='input'>
-            <input type='text' />
+        <div id="input">
+            <input type="text" />
         </div>
     </body>
 </html>

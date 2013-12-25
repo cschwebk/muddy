@@ -112,12 +112,13 @@ ul {
     overflow-x: hidden;
     overflow-y: hidden;
     height: 100%;
-    width: 100%;
+    width: 40%;
+    float: left;
     font-family: DroidSansMono;
     font-size: 10px;
     line-height: 14px;
     color: #dddddd;
-    position: absolute;
+    position: relative;
     background-color: rgb(45,45,45);
     cursor: default;
     box-sizing: border-box;
@@ -125,7 +126,28 @@ ul {
   }
 
   #client .player-output li {
-    margin-bottom: 5px;
+    margin-bottom: 2px;
+  }
+
+  #client .session-output {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 100%;
+    width: 60%;
+    float: left;
+    font-family: DroidSansMono;
+    font-size: 10px;
+    line-height: 14px;
+    color: #dddddd;
+    position: relative;
+    background-color: rgb(45,45,45);
+    cursor: default;
+    box-sizing: border-box;
+    padding: 0 5px;
+  }
+
+  #client .session-output li {
+    margin-bottom: 2px;
   }
 
   #client .comm-container {
