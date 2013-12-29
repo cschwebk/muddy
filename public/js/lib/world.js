@@ -62,25 +62,21 @@ World.prototype.listTriggers = function(triggers) {
 
 World.prototype.updatePlayer = function(data) {
     var key = data.key,
-        player = data.player;
+        player = data.player,
+        tpStart = player.tpStart,
+        tpLast = player.tpTotal,
+        xpStart = player.xpStart,
+        xpLast = player.xpTotal[player.xpTotal.length - 1],
+        xpPrev = player.xpTotal[player.xpTotal.length - 2];
 
     if (key === 'all') {
         this.name.html('Name: ' + player.name);
         this.level.html('Level: ' + player.level);
-        this.xp.html('XP Total (Needed): ' + player.xpTotal[player.xpTotal.length - 1] + ' (' + player.xpNeeded+ ')');
-        this.tp.html('TP Total (Needed): ' + player.tpTotal[player.tpTotal.length - 1] + ' (' + player.tpNeeded + ')');
+        this.xp.html('XP Needed (Total): ' + player.xpNeeded + ' (' + xpLast + ')');
+        this.tp.html('TP Needed (Total): ' + player.tpNeeded + ' (' + tpLast + ')');
 
-        if (player.xpTotal.length < 2) {
-            this.xpSession.html('XP This Session: 0');
-        } else {
-            this.xpSession.html('XP This Session: ' + (player.xpTotal[player.xpTotal.length - 1] - player.xpTotal[0]));
-        }
-
-        if (player.tpTotal.length < 2) {
-            this.tpSession.html('TP This Session: 0');
-        } else {
-            this.tpSession.html('TP This Session: ' + (player.tpTotal[player.tpTotal.length - 1] - player.tpTotal[0]));
-        }
+        this.xpSession.html('XP Last Kill (This Session): ' + (xpLast - xpPrev) + ' (' + (xpLast - xpStart) + ')');
+        this.tpSession.html('TP This Session: ' + (tpLast - tpStart));
     }
 
     if (key === 'target') {

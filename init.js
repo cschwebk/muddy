@@ -118,6 +118,21 @@ function connectToMud(socket) {
                 key: 'all',
                 player: player.getPlayer()
             }));
+        } else if (data.indexOf('__init') > -1) {
+            values = data.split('__');
+            player.set('level', values[2]);
+            player.set('name', values[4]);
+            player.set('xpStart', values[6]);
+            player.set('xpTotal', values[6]);
+            player.set('xpTotal', values[6]);
+            player.set('xpNeeded', values[8]);
+            player.set('tpStart', values[10]);
+            player.set('tpTotal', values[10]);
+            player.set('tpNeeded', values[12]);
+            socket.emit('message', createResponse('updatePlayer', {
+                key: 'all',
+                player: player.getPlayer()
+            }));
         } else {
             socket.emit('message', createResponse('updateWorld', formatted));
 
